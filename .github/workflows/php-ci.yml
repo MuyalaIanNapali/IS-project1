@@ -1,0 +1,35 @@
+name: PHP CI
+
+# Runs on GitHub's own ephemeral runners every time you push —
+# no server to provision or keep alive. This is "serverless compute":
+# the machine is created for this job and destroyed when it finishes.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint PHP source
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_pgsql, pgsql
+
+      - name: Show PHP version
+        run: php -v
+
+      - name: Lint every PHP file (php -l)
+        run: |
+          echo "Checking syntax of all .php files..."
+          find . -name "*.php" -print0 | xargs -0 -n1 php -l
+          echo "All PHP files passed syntax check."

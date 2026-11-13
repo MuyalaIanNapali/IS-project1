@@ -1,0 +1,9 @@
+# PHP / editor cruft
+*.log
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# If you later move DB credentials out of db.php into a local file:
+# config.local.php
