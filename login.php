@@ -4,21 +4,21 @@ require 'db.php';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :u");
-    $stmt->execute([':u' => $username]);
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :e");
+    $stmt->execute([':e' => $email]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id']  = $user['id'];
-        $_SESSION['username'] = $user['username'];
+        $_SESSION['email']    = $user['email'];
         $_SESSION['fullname'] = $user['fullname'];
         header("Location: welcome.php");
         exit;
     }
-    $error = "Invalid username or password.";
+    $error = "Invalid email or password.";
 }
 ?>
 <!DOCTYPE html><html><head><meta charset="UTF-8"><title>Log in</title>
@@ -31,7 +31,7 @@ a{color:#2f5bd1}</style></head><body>
 <form class="card" method="post">
   <h2>Log in</h2>
   <?php if($error):?><div class="err"><?=htmlspecialchars($error)?></div><?php endif;?>
-  <input name="username" placeholder="Username" required>
+  <input name="email" type="email" placeholder="Email" required>
   <input name="password" type="password" placeholder="Password" required>
   <button>Log in</button>
   <p style="text-align:center;font-size:14px">New here? <a href="register.php">Sign up</a></p>

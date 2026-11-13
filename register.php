@@ -5,18 +5,16 @@ $error = $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullname = trim($_POST['fullname'] ?? '');
     $email    = trim($_POST['email'] ?? '');
-    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if ($fullname && $email && $username && $password) {
+    if ($fullname && $email && $password) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
         try {
             $stmt = $pdo->prepare(
-              "INSERT INTO users (fullname,email,username,password)
-               VALUES (:f,:e,:u,:p)");
-            $stmt->execute([':f'=>$fullname, ':e'=>$email,
-                           ':u'=>$username, ':p'=>$hash]);
-            $success = "Account created for $username. You can now log in.";
+              "INSERT INTO users (fullname,email,password)
+               VALUES (:f,:e,:p)");
+            $stmt->execute([':f'=>$fullname, ':e'=>$email, ':p'=>$hash]);
+            $success = "Account created for $email. You can now log in.";
         } catch (PDOException $ex) {
             $error = "Could not register: " . $ex->getMessage();
         }
@@ -37,7 +35,6 @@ a{color:#2f5bd1}</style></head><body>
   <?php if($success):?><div class="msg ok"><?=htmlspecialchars($success)?></div><?php endif;?>
   <input name="fullname" placeholder="Full name" required>
   <input name="email" type="email" placeholder="Email" required>
-  <input name="username" placeholder="Username" required>
   <input name="password" type="password" placeholder="Password" required>
   <button>Sign up</button>
   <p style="text-align:center;font-size:14px">Have an account? <a href="login.php">Log in</a></p>

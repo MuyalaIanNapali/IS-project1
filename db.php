@@ -1,10 +1,10 @@
 <?php
-// Database connection 
+// Database connection — CAT2 (PostgreSQL via PDO)
 $host   = '127.0.0.1';
 $port   = '5432';
-$dbname = 'CAT2';              
+$dbname = 'CAT2';              // quoted name created in schema.sql
 $user   = 'cat2user';
-$pass   = 'StrongPass123';     
+$pass   = 'StrongPass123';     // change this to match your own DB password
 
 try {
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
