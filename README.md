@@ -1,23 +1,23 @@
-# IS Project 1 — CAT2 Web Application
+# IS Project 1 - Web Application
 
-A small PHP web app (signup, login, feedback) hosted on **nginx + Debian 13 + PostgreSQL**, built for the CNS Server Administration CAT 2.
+A small PHP web app (signup, login, feedback) hosted on **nginx + Debian 13 + PostgreSQL**
 
 ## Stack
 - **nginx** — web server
 - **PHP-FPM 8.4** — runs the `.php` pages
-- **PostgreSQL 17** — database (`CAT2`), accessed via PDO (`pdo_pgsql`)
+- **PostgreSQL 17** — database , accessed via PDO (`pdo_pgsql`)
 
 ## Files
 | File | Purpose |
 |------|---------|
 | `index.php` | Landing page + DB connection test |
-| `db.php` | PDO connection to the `CAT2` database |
+| `db.php` | PDO connection to the  database |
 | `register.php` | Signup — inserts a user (password hashed) |
 | `login.php` | Login — verifies password, starts session |
 | `welcome.php` | Post-login dashboard |
 | `logout.php` | Ends the session |
 | `feedback.php` | Extra form — POST + retrieve from `feedback` table |
-| `schema.sql` | Creates the `CAT2` database, app role and tables |
+| `schema.sql` | Creates the database, app role and tables |
 | `.github/workflows/php-ci.yml` | GitHub Actions — lints PHP on every push (serverless) |
 
 ## Setup on the server
@@ -39,5 +39,5 @@ sudo nginx -t && sudo systemctl reload nginx
 
 Then browse to `http://localhost/`.
 
-> Note: `db.php` holds the DB password in plain text for simplicity in this lab.
-> In production you would move it to an environment variable or an untracked config file.
+> Note: `db.php` holds the DB password in plain text for simplicity.
+> In production you would move it to an environment variable.
